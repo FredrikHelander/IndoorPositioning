@@ -8,7 +8,7 @@ import android.view.MenuItem;
 /**
  * Created by Hampus on 2015-02-10.
  */
-public class OfflineActivity extends ActionBarActivity{
+public class OnlineActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,6 +31,7 @@ public class OfflineActivity extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
