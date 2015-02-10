@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -45,6 +46,10 @@ public class OfflineActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    public void startSampling(View view) {
+
+    }
+    
     private void setupEstimote() {
         beaconManager = new BeaconManager(getApplicationContext());
 
