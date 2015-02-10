@@ -3,32 +3,137 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:textAlignment="center">
+    android:textAlignment="center"
+    android:weightSum="1"
+    android:id="@+id/layout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SAMPLES"
-        android:id="@+id/tvSamples"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/nbrOfSamples"
-        android:layout_gravity="center_horizontal|top"
-        android:textSize="50dp"
-        android:text="100" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:layout_gravity="center_horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/top_linear_layout"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="X:"
+                    android:id="@+id/tvCoordX"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/coordX"
+                    android:layout_toStartOf="@+id/coordX"
+                    android:layout_column="52"
+                    android:layout_weight="1"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/coordX"
+                    android:maxLength="4"
+                    android:text="0"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/coordY"
+                    android:layout_toStartOf="@+id/coordY"
+                    android:layout_column="34"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Y:"
+                    android:id="@+id/tvCoordX"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/coordY"
+                    android:layout_toStartOf="@+id/coordY"
+                    android:textSize="20dp"
+                    android:layout_column="4"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/coordY"
+                    android:numeric="integer"
+                    android:maxLength="3"
+                    android:text="0"
+                    android:textSize="20dp"
+                    android:layout_alignTop="@+id/tvCoordX"
+                    android:layout_centerHorizontal="true"
+                    android:layout_column="55"
+                    android:layout_weight="1"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="START SAMPLING"
-        android:id="@+id/startSampling"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_weight="0.57">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="SAMPLES"
+            android:id="@+id/tvSamples"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:textSize="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/nbrOfSamples"
+            android:layout_gravity="center_horizontal"
+            android:textSize="125dp" />
+
+        <SeekBar
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/sampleBar"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.39">
+
+        <ImageButton
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/startButton"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@drawable/btn_start"
+            android:layout_marginBottom="10dp"
+            android:onClick="startSampling"/>
+    </FrameLayout>
+
+
 </LinearLayout>
