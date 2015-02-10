@@ -1,5 +1,6 @@
 package com.positioning.indoor.indoorpositioning;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
@@ -37,10 +38,19 @@ public class OfflineActivity extends ActionBarActivity{
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        Intent intent;
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                break;
+            case R.id.action_online:
+                intent = new Intent(this, OnlineActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_offline:
+                intent = new Intent(this, OfflineActivity.class);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -49,7 +59,7 @@ public class OfflineActivity extends ActionBarActivity{
     public void startSampling(View view) {
 
     }
-    
+
     private void setupEstimote() {
         beaconManager = new BeaconManager(getApplicationContext());
 
@@ -69,6 +79,7 @@ public class OfflineActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_offline);
         setupEstimote();
     }
 

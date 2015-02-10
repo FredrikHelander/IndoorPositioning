@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".OfflineActivity" android:label="OfflineActivity" />
+        <activity android:name=".OnlineActivity" android:label="OnlineActivity" />
     </application>
 
 </manifest>

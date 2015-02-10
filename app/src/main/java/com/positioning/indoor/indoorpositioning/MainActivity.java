@@ -1,9 +1,12 @@
 package com.positioning.indoor.indoorpositioning;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.zip.Inflater;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -28,11 +31,21 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        Intent intent;
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                break;
+            case R.id.action_online:
+                intent = new Intent(this, OnlineActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_offline:
+                intent = new Intent(this, OfflineActivity.class);
+                startActivity(intent);
+                break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
