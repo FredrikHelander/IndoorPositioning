@@ -22,9 +22,33 @@ public class Filter {
     private double[] state;
     private double[][] transitionmatrix;
     private double[][] controlmatrix;
+    private double[][] noisematrix;
+    private double[][] H;
+    private double[][] coPrediction;
 
     public Filter(double[] sample) {
         this.sample = sample;
+        transitionmatrix = new double[][] { {1, 0, 1, 0},
+                                            {0, 1, 0, 1},
+                                            {0, 0, 1, 0},
+                                            {0, 0, 0, 1} };
+
+        noisematrix = new double[][] { {0.1, 0, 0, 0},
+                                       {0, 0.1, 0, 0},
+                                       {0, 0, 0.1, 0},
+                                       {0, 0, 0, 0.1} };
+
+        H = new double[][] { {1, 0, 0, 0},
+                             {0, 1, 0, 0} };
+
+        coPrediction = new double[][] { {10, 0, 0, 0, 0, 0},
+                                        {0, 10, 0, 0, 0, 0},
+                                        {0, 0, 10, 0, 0, 0},
+                                        {0, 0, 0, 10, 0, 0},
+                                        {0, 0, 0, 0, 10, 0},
+                                        {0, 0, 0, 0, 0, 10} };
+
+        
     }
 
 
