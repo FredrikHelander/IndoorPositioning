@@ -15,12 +15,14 @@ public class Nearestneighbor {
 
     public int getLocation(double[] v) {
         double[] dist = new double[rp.size()];
+        double[] temp = new double[rp.size()];
         for(int i = 0; i < rp.size(); i++) {
             dist[i] = Euclidean(v, rp.get(i));
+            temp[i] = dist[i];
         }
-        double[] temp = dist;
         Arrays.sort(dist);
-        for(int j = 0; j < rp.size(); j++) {  //Hmm
+        //for(int j = 0; j < rp.size(); j++) {  //Hmm
+        for(int j = 0; j < rp.size(); j++) {
             if(temp[j] == dist[0]) {
                 return j;
             }
