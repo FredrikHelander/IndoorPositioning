@@ -17,6 +17,7 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +28,14 @@ public class OfflineActivity extends ActionBarActivity{
     private static final Region ALL_ESTIMOTE_BEACONS = new Region("regionId", ESTIMOTE_PROXIMITY_UUID, null, null);
     private static int NBR_OF_SAMPLES = 0;
     private static int sampleCount = 0;
+    private ArrayList<ReferencePoint> referencePoints;
 
     private TextView tvNbrOfValues;
     private EditText coordX;
     private EditText coordY;
     private SeekBar sampleBar;
+
+    private TextView tvCount;
 
     private BeaconManager beaconManager;
     private SampleHandler sampleHandler;
@@ -42,23 +46,46 @@ public class OfflineActivity extends ActionBarActivity{
         coordY.setEnabled(false);
 
         OfflineActivity.NBR_OF_SAMPLES = Integer.valueOf(tvNbrOfValues.getText().toString());
+
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+            @Override public void onServiceReady() {
+                try {
+                    beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
+                } catch (RemoteException e) {
+                    Log.e("Beacon", "Cannot start ranging", e);
+                }
+            }
+        });
+
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
                 for (Beacon b : beacons) {
                     sampleHandler.put(b.getMacAddress(), b.getRssi());
+                    Log.d("BEACON", b.getMacAddress() + " " + b.getRssi());
                 }
                 sampleCount++;
-                if (sampleCount == NBR_OF_SAMPLES) {
+                tvCount.setText(Integer.toString(sampleCount));
+                if (sampleCount >= NBR_OF_SAMPLES) {
+                    tvCount.setText(Integer.toString(0));
                     try {
                         sampleCount = 0;
                         beaconManager.stopRanging(ALL_ESTIMOTE_BEACONS);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    referencePoints.add(sampleHandler.getReferencePoint(coordX.getText().toString(), coordY.getText().toString()));
+                    //SEND REFERENCEPOINT
+                    enableLayout();
                 }
             }
         });
+    }
+
+    public void enableLayout() {
+        sampleBar.setEnabled(true);
+        coordX.setEnabled(true);
+        coordY.setEnabled(true);
     }
 
     private void setupEstimote() {
@@ -108,6 +135,8 @@ public class OfflineActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline);
         sampleHandler = new SampleHandler();
+        referencePoints = new ArrayList<ReferencePoint>();
+        tvCount = (TextView)findViewById(R.id.tvCount);
         setupLayout();
         setupEstimote();
     }

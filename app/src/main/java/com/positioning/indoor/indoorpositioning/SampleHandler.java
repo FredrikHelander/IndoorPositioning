@@ -1,11 +1,16 @@
 package com.positioning.indoor.indoorpositioning;
 
+import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.view.View;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,11 +20,11 @@ import java.util.Set;
  */
 public class SampleHandler {
     private Map<String, ArrayList<Integer>> samples;
-    private Map<String, ArrayList<String>> fingerprints;
+    private ArrayList<String> devices;
 
     public SampleHandler() {
         samples = new HashMap<String, ArrayList<Integer>>();
-        fingerprints = new HashMap<String, ArrayList<String>>();
+        devices = new ArrayList<String>();
     }
 
     public void clear() {
@@ -43,6 +48,8 @@ public class SampleHandler {
     }
 
     public Object put(String key, Integer value) {
+        if (!devices.contains(key))
+            devices.add(key);
         if (!samples.containsKey(key))
             samples.put(key, new ArrayList<Integer>());
         return samples.get(key).add(value);
@@ -60,7 +67,8 @@ public class SampleHandler {
         return samples.values();
     }
 
-    public void saveSample() {
+    public ReferencePoint getReferencePoint(String coordX, String coordY) {
+        Map<String, String> fingerprint = new HashMap<String, String>();
         Set<String> keys = samples.keySet();
         for (String key : keys) {
             int sum = 0;
@@ -68,13 +76,34 @@ public class SampleHandler {
                 sum += sample;
             }
             String average = new DecimalFormat("#.00").format((double) sum / (double) samples.get(key).size());
-            if (!fingerprints.containsKey(key))
-                fingerprints.put(key, new ArrayList<String>(Arrays.asList(average)));
-            fingerprints.get(key).add(average);
+            fingerprint.put(key, average);
+        }
+        samples.clear();
+        return new ReferencePoint(coordX, coordY, fingerprint);
+    }
+
+/*    public void saveFingerprintsToFile() {
+
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file1 = new File(path, "fingerprints.csv");
+        FileOutputStream outputStream;
+
+        try {
+            FileOutputStream stream = new FileOutputStream(file1, true);
+            stream.write(printFingerprints());
+            stream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public Set<Map.Entry<String, ArrayList<String>>> getFingerprints() {
-        return fingerprints.entrySet();
-    }
+   public byte[] printFingerprints() {
+        StringBuilder sb = new StringBuilder();
+        Collections.sort(devices);
+
+        for (String device : devices) {
+
+        }
+        return sb.toString().getBytes();
+    }*/
 }
